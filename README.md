@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/varunsridharan/pi-hole-android-private-dns/master/assets/banner.jpg"> <br/>
+
 # Pi-Hole Android Private DNS Installer
 I came across Pi-hole about a year ago, and have been using it on and off since then for small projects.
 
@@ -36,7 +38,7 @@ If you find it useful, let me know :wink:
 You can contact me on [Twitter][twitter] or through my [email][email].
 
 ## Backed By
-| [![DigitalOcean][do-image]][do-ref] | [![JetBrains][jb-image]][jb-ref] |  [![Tidio Chat][tidio-image]][tidio-ref] | [![Tidio Chat][tidio-image]][tidio-ref] |
+| [![DigitalOcean][do-image]][do-ref] | [![JetBrains][jb-image]][jb-ref] |  [![Tidio Chat][tidio-image]][tidio-ref] | [![Cloudron][cro-image]][cro-ref] |
 | --- | --- | --- | --- |
 
 [twitter]: https://twitter.com/varunsridharan2
