@@ -27,6 +27,7 @@ echo ""
 echo "=============================="
 echo "Pi-Hole Android Private DNS Domain Name"
 read domain_name
+
 echo "=============================="
 echo ""
 #
@@ -73,6 +74,7 @@ echo ""
 echo "=============================="
 echo "Your Email To Use When Requesting Certificate in Let's Encrypt"
 read email
+
 echo "Email : $email"
 echo "Domain : $domain_name"
 echo "=============================="
