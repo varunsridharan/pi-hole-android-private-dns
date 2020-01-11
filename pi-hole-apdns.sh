@@ -23,8 +23,12 @@ sudo apt-get -y install nginx php7.0-fpm php7.0-zip apache2-utils php7.0-sqlite3
 #
 # Requesting User To Provide A Valid Domain Name For Android Private DNS
 #
+echo ""
+echo "=============================="
 echo "Pi-Hole Android Private DNS Domain Name"
 read domain_name
+echo "=============================="
+echo ""
 #
 # Setup Nginx To Use Given Domain Name
 #
@@ -65,10 +69,14 @@ sudo systemctl reload nginx
 #
 sudo add-apt-repository -y ppa:certbot/certbot
 sudo apt-get install -y certbot python-certbot-nginx
+echo ""
+echo "=============================="
 echo "Your Email To Use When Requesting Certificate in Let's Encrypt"
 read email
 echo "Email : $email"
 echo "Domain : $domain_name"
+echo "=============================="
+echo ""
 sudo certbot --nginx -m "$email" -d "$domain_name" -n --agree-tos --no-eff-email
 #
 # Starting All Required Services
@@ -113,5 +121,7 @@ echo ""
 echo ""
 echo "======================================================================================="
 echo " Congrats Pi-Hole With Android Private DNS is configured."
-echo "Now you can use the domain name ("$dns_domain_name") in your android phone to block adds"
+echo "Private DNS Domain : $domain_name"
+echo "Now you can use the domain name in your android phone to block adds"
+echo "For more information on how to configure private dns in android please check https://github.com/varunsridharan/pi-hole-android-private-dns"
 echo "======================================================================================="
