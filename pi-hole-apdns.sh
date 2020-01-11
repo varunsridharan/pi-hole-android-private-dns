@@ -3,48 +3,75 @@ echo "========================================================="
 echo "==!! Pi-Hole : Android Private DNS Configuration !!=="
 echo "========================================================="
 echo ""
-#echo "Chaning Location To /tmp/"
-#cd /tmp/
-echo ""
-echo "============="
-echo "Install cloudflared for DNS Over HTTPS ? "
-echo "(y)es or (N)o"
-echo "============="
-read cloudflaredinstall
-if [ "$cloudflaredinstall" = "y" ] || [ "$cloudflaredinstall" = "Y" ]; then
-	wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
-	sudo chmod +x ./cloudflared-stable-linux-amd64.deb
-	sudo apt-get install ./cloudflared-stable-linux-amd64.deb
-	sudo useradd -s /usr/sbin/nologin -r -M cloudflared
-	sudo touch /etc/default/cloudflared
-	sudo touch /etc/systemd/system/cloudflared.service
-	echo "
-# Commandline args for cloudflared
-CLOUDFLARED_OPTS=--port 5053 --upstream https://1.1.1.1/dns-query --upstream https://1.0.0.1/dns-query
-	" > /etc/default/cloudflared
-	
-	echo "
-[Unit]
-Description=cloudflared DNS over HTTPS proxy
-After=syslog.target network-online.target
-
-[Service]
-Type=simple
-User=cloudflared
-EnvironmentFile=/etc/default/cloudflared
-ExecStart=/usr/local/bin/cloudflared proxy-dns $CLOUDFLARED_OPTS
-Restart=on-failure
-RestartSec=10
-KillMode=process
-
-[Install]
-WantedBy=multi-user.target
-	" > /etc/systemd/system/cloudflared.service
-
-	sudo chown cloudflared:cloudflared /etc/default/cloudflared
-	sudo chown cloudflared:cloudflared /usr/local/bin/cloudflared
-	sudo systemctl unmask cloudflared
-	sudo systemctl enable cloudflared
-	sudo systemctl start cloudflared
-	sudo systemctl status cloudflared
-fi
+#
+# Disable Existing WebServer
+#
+echo "Stopping & Disabling lighttpd Server"
+sudo service lighttpd stop
+sudo systemctl disable lighttpd
+#
+# Setting Up Ubuntu To Fetch PHP7.0 Source
+#
+sudo apt-get -y install python-software-properties
+sudo add-apt-repository -y ppa:ondrej/php
+sudo apt-get update
+#
+# Starting To Instll Nginx & PHP7.0 With its Addons
+#
+echo "Installing Nginx,PHP7.0"
+sudo apt-get -y install nginx php7.0-fpm php7.0-zip apache2-utils php7.0-sqlite3 php7.0-mbstring
+#
+# Requesting User To Provide A Valid Domain Name For Android Private DNS
+#
+echo "Pi-Hole Android Private DNS Domain Name"
+read domain_name
+#
+# Setup Nginx To Use Given Domain Name
+#
+echo "Setting Up Nginx"
+sudo touch /etc/nginx/sites-available/pihole
+echo "server {
+            listen 80;
+            listen [::]:80;
+            root /var/www/html;
+            server_name {dns_domain_name};
+            autoindex off;
+            index pihole/index.php index.php index.html index.htm;
+            location / {
+                    expires max;
+                    try_files $uri $uri/ =404;
+            }
+            location ~ \.php$ {
+                    include snippets/fastcgi-php.conf;
+                    fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+            }
+            location /*.js {
+                    index pihole/index.js;
+            }
+            location /admin {
+                    root /var/www/html;
+                    index index.php index.html index.htm;
+            }
+            location ~ /\.ht {
+                    deny all;
+            }
+    }" > /etc/nginx/sites-available/pihole
+sudo sed -i 's/{dns_domain_name}/'$domain_name'/g' /etc/nginx/sites-available/pihole
+sudo ln -s /etc/nginx/sites-available/pihole /etc/nginx/sites-enabled/pihole 
+sudo nginx -t
+sudo systemctl reload nginx
+#
+# Installing Certbot To Generate Letsenc
+#
+sudo add-apt-repository -y ppa:certbot/certbot
+sudo apt-get install -y certbot python-certbot-nginx
+echo "Your Email To Use When Requesting Certificate in Let's Encrypt"
+read email
+echo "Email : $email"
+echo "Domain : $domain_name"
+sudo certbot --nginx -m "$email" -d "$domain_name" -n --agree-tos --no-eff-email
+#
+# Starting All Required Services
+#
+sudo service php7.0-fpm start
+sudo service nginx start
