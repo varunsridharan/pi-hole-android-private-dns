@@ -1,0 +1,41 @@
+{
+  "name"        : "",
+  "description" : "",
+  "readme"      : "readme.md",
+  "support"     : {
+	"email"  : "varunsridharan23@gmail.com",
+	"docs"   : "",
+	"issues" : "",
+	"source" : ""
+  },
+  "homepage"    : "",
+  "license"     : "GPL-3.0-or-later",
+  "keywords"    : [ ],
+  "require"     : {
+	"wponion/wponion"              : "*",
+	"varunsridharan/vsp-framework" : "*"
+  },
+  "require-dev" : {
+	"varunsridharan/wp-cli-textdomain" : "*",
+	"varunsridharan/wp2github-md"      : "*"
+  },
+  "scripts"     : {
+	"makepot"        : "makepot ./wp-pot.json",
+	"add-textdomain" : "add-textdomain -i {textdomain} ./",
+	"build"          : [ "@makepot", "add-textdomain" ]
+  },
+  "autoload"    : {
+	"psr-4"    : { },
+	"psr-0"    : { },
+	"classmap" : [ ],
+	"files"    : [ ]
+  },
+  "authors"     : [
+	{
+	  "name"     : "Varun Sridharan",
+	  "email"    : "varunsridharan23@gmail.com",
+	  "homepage" : "http://varunsridharan.in",
+	  "role"     : "Developer"
+	}
+  ]
+}

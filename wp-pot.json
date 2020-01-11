@@ -1,0 +1,10 @@
+{
+  "src"     : "./",
+  "dist"    : "./i18n/{textdomain}.pot",
+  "domain"  : "wponion",
+  "exclude" : "assets/,src/,node_modules/,vendor/",
+  "headers" : {
+    "Report-Msgid-Bugs-To" : "https://wordpress.org/support/plugin/{slug}\n",
+    "Language-Team"        : "varunsridharan23@gmail.com\n"
+  }
+}
