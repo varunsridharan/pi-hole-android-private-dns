@@ -75,3 +75,43 @@ sudo certbot --nginx -m "$email" -d "$domain_name" -n --agree-tos --no-eff-email
 #
 sudo service php7.0-fpm start
 sudo service nginx start
+
+#
+# Configure Nginx To Run DNS Over TLS By Creating A Stream
+#
+sudo mkdir /etc/nginx/streams/
+sudo touch /etc/nginx/streams/dns-over-tls
+sudo echo "upstream dns-servers {
+           server    127.0.0.1:53;
+    }
+    server {
+      listen 853 ssl; # managed by Certbot
+      ssl_certificate /etc/letsencrypt/live/{dns_domain_name}/fullchain.pem; # managed by Certbot
+      ssl_certificate_key /etc/letsencrypt/live/{dns_domain_name}/privkey.pem; # managed by Certbot
+      ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+      ssl_protocols        TLSv1.2 TLSv1.3;
+      ssl_ciphers          HIGH:!aNULL:!MD5;
+            
+      ssl_handshake_timeout    10s;
+      ssl_session_cache        shared:SSL:20m;
+      ssl_session_timeout      4h;
+      proxy_pass dns-servers;
+    }" > /etc/nginx/streams/dns-over-tls
+sudo sed -i 's/{dns_domain_name}/'$domain_name'/g' /etc/nginx/streams/dns-over-tls
+sudo echo "
+    stream {
+            include /etc/nginx/streams/*;
+    }
+	" >> /etc/nginx/nginx.conf
+sudo service nginx restart
+#
+# All Done Now
+#
+echo ""
+echo ""
+echo ""
+echo ""
+echo "======================================================================================="
+echo " Congrats Pi-Hole With Android Private DNS is configured."
+echo "Now you can use the domain name ("$dns_domain_name") in your android phone to block adds"
+echo "======================================================================================="
