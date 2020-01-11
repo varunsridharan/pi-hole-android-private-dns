@@ -3,6 +3,17 @@ echo "========================================================="
 echo "==!! Pi-Hole : Android Private DNS Configuration !!=="
 echo "========================================================="
 echo ""
+DNS_DOMAIN_NAME="$1"
+SSL_CERT_EMAIL="$2"
+if [[ -z "$DNS_DOMAIN_NAME" ]]; then
+    echo "Set a valid Private DNS Domain Name"
+    exit 1
+fi
+
+if [[ -z "$SSL_CERT_EMAIL" ]]; then
+    echo "Set a valid Email Address To Get Certificate From Let's Encrypt"
+    exit 1
+fi
 #
 # Disable Existing WebServer
 #
@@ -26,8 +37,6 @@ sudo apt-get -y install nginx php7.0-fpm php7.0-zip apache2-utils php7.0-sqlite3
 echo ""
 echo "=============================="
 echo "Pi-Hole Android Private DNS Domain Name"
-read domain_name
-
 echo "=============================="
 echo ""
 #
@@ -61,7 +70,7 @@ echo "server {
                     deny all;
             }
     }" > /etc/nginx/sites-available/pihole
-sudo sed -i 's/{dns_domain_name}/'$domain_name'/g' /etc/nginx/sites-available/pihole
+sudo sed -i 's/{dns_domain_name}/'$DNS_DOMAIN_NAME'/g' /etc/nginx/sites-available/pihole
 sudo ln -s /etc/nginx/sites-available/pihole /etc/nginx/sites-enabled/pihole 
 sudo nginx -t
 sudo systemctl reload nginx
@@ -73,13 +82,11 @@ sudo apt-get install -y certbot python-certbot-nginx
 echo ""
 echo "=============================="
 echo "Your Email To Use When Requesting Certificate in Let's Encrypt"
-read email
-
-echo "Email : $email"
-echo "Domain : $domain_name"
+echo "Email : $SSL_CERT_EMAIL"
+echo "Domain : $DNS_DOMAIN_NAME"
 echo "=============================="
 echo ""
-sudo certbot --nginx -m "$email" -d "$domain_name" -n --agree-tos --no-eff-email
+sudo certbot --nginx -m "$SSL_CERT_EMAIL" -d "$DNS_DOMAIN_NAME" -n --agree-tos --no-eff-email
 #
 # Starting All Required Services
 #
@@ -107,7 +114,7 @@ sudo echo "upstream dns-servers {
       ssl_session_timeout      4h;
       proxy_pass dns-servers;
     }" > /etc/nginx/streams/dns-over-tls
-sudo sed -i 's/{dns_domain_name}/'$domain_name'/g' /etc/nginx/streams/dns-over-tls
+sudo sed -i 's/{dns_domain_name}/'$DNS_DOMAIN_NAME'/g' /etc/nginx/streams/dns-over-tls
 sudo echo "
     stream {
             include /etc/nginx/streams/*;
@@ -122,8 +129,8 @@ echo ""
 echo ""
 echo ""
 echo "======================================================================================="
-echo " Congrats Pi-Hole With Android Private DNS is configured."
-echo "Private DNS Domain : $domain_name"
+echo "Congrats Pi-Hole With Android Private DNS is configured."
+echo "Private DNS Domain : $DNS_DOMAIN_NAME"
 echo "Now you can use the domain name in your android phone to block adds"
 echo "For more information on how to configure private dns in android please check https://github.com/varunsridharan/pi-hole-android-private-dns"
 echo "======================================================================================="
