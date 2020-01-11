@@ -23,26 +23,19 @@ sudo systemctl disable lighttpd
 #
 # Setting Up Ubuntu To Fetch PHP7.0 Source
 #
+echo "Installing Nginx,PHP7.0"
 sudo apt-get -y install python-software-properties
 sudo add-apt-repository -y ppa:ondrej/php
 sudo apt-get update
-#
-# Starting To Instll Nginx & PHP7.0 With its Addons
-#
-echo "Installing Nginx,PHP7.0"
 sudo apt-get -y install nginx php7.0-fpm php7.0-zip apache2-utils php7.0-sqlite3 php7.0-mbstring
 #
 # Requesting User To Provide A Valid Domain Name For Android Private DNS
 #
 echo ""
 echo "=============================="
-echo "Pi-Hole Android Private DNS Domain Name"
+echo "Setting Nginx To Use The Given Domain Name"
 echo "=============================="
 echo ""
-#
-# Setup Nginx To Use Given Domain Name
-#
-echo "Setting Up Nginx"
 sudo touch /etc/nginx/sites-available/pihole
 echo "server {
             listen 80;
@@ -74,28 +67,33 @@ sudo sed -i 's/{dns_domain_name}/'$DNS_DOMAIN_NAME'/g' /etc/nginx/sites-availabl
 sudo ln -s /etc/nginx/sites-available/pihole /etc/nginx/sites-enabled/pihole 
 sudo nginx -t
 sudo systemctl reload nginx
-#
-# Installing Certbot To Generate Letsenc
-#
+echo ""
+echo "=============================="
+echo "Installing Certbot To Get Valid Certificate From Let's Encrypt"
+echo "=============================="
+echo ""
 sudo add-apt-repository -y ppa:certbot/certbot
 sudo apt-get install -y certbot python-certbot-nginx
 echo ""
 echo "=============================="
-echo "Your Email To Use When Requesting Certificate in Let's Encrypt"
+echo "Below Details are used to request for an SSL"
 echo "Email : $SSL_CERT_EMAIL"
 echo "Domain : $DNS_DOMAIN_NAME"
 echo "=============================="
 echo ""
 sudo certbot --nginx -m "$SSL_CERT_EMAIL" -d "$DNS_DOMAIN_NAME" -n --agree-tos --no-eff-email
+
 #
 # Starting All Required Services
 #
 sudo service php7.0-fpm start
 sudo service nginx start
 
-#
-# Configure Nginx To Run DNS Over TLS By Creating A Stream
-#
+echo ""
+echo "=============================="
+echo "Setting Up Nginx To Run A DNS Stream For Android Private DNS Feature"
+echo "=============================="
+echo ""
 sudo mkdir /etc/nginx/streams/
 sudo touch /etc/nginx/streams/dns-over-tls
 sudo echo "upstream dns-servers {
@@ -130,7 +128,9 @@ echo ""
 echo ""
 echo "======================================================================================="
 echo "Congrats Pi-Hole With Android Private DNS is configured."
+echo ""
 echo "Private DNS Domain : $DNS_DOMAIN_NAME"
+echo ""
 echo "Now you can use the domain name in your android phone to block adds"
 echo "For more information on how to configure private dns in android please check https://github.com/varunsridharan/pi-hole-android-private-dns"
 echo "======================================================================================="
