@@ -1,43 +1,24 @@
-# Git Template
-Custom Github Template
+# Pi-Hole Android Private DNS Installer
+I came across Pi-hole about a year ago, and have been using it on and off since then for small projects.
 
-[![Latest Stable Version][latest-stable-version-img]][latest-stable-version-link]
-[![Latest Unstable Version][latest-Unstable-version-img]][latest-Unstable-version-link]
-[![Total Downloads][total-downloads-img]][total-downloads-link]
-[![WP][wpcs-img]][wpcs-link]
-[![License][license-img]][license-link]
-[![composer.lock available][composerlock-img]][composerlock-link]
+A few months ago I decided to use it for private DNS, but the compatibility with Android Private DNS was not widely available or effective. I spent many hours searching over the internet, piecing together code from various sources and testing it.
+
+I am finally happy to say that I am able to create a working piece of code for Android Private DNS!
+
+As a member of the open source community, I would like to give back, and am posting the code here for use by fellow members. I am sure there are at least a few members out there who may have need for this code.
 
 ## Installation
-The preferred way to install this extension is through [Composer][composer].
+This is a simple script which requires 2 arguments
+1. Domain Name To Run Android Private DNS Service
+2. Email To Share with letsencrypt to get an SSL For Android Private DNS
 
-To install **VSP_Framework library**, simply:
-
-    $ composer require varunsridharan/vsp-framework
-
-The previous command will only install the necessary files, if you prefer to **download the entire source code** you can use:
-
-    $ composer require varunsridharan/vsp-framework --prefer-source
-
-You can also **clone the complete repository** with Git:
-
-    $ git clone https://github.com/varunsridharan/vsp-framework.git
-
-Or **install it manually**:
-
-[Download VSP_Framework.zip][downloadzip]:
-
-    $ wget https://github.com/varunsridharan/vsp-framework/archive/master.zip
-
-## Usage
-
-```php
-<?php
-
-// Some Code Here
-
-?>
 ```
+sudo wget https://raw.githubusercontent.com/varunsridharan/pi-hole-android-private-dns/master/pi-hole-android-private-dns.sh
+sudo bash pi-hole-android-private-dns.sh {domain_name} {email_for_letsencrypt}
+```
+
+**Example Run** `sudo bash pi-hole-android-private-dns.sh mydns.example.com myemail@gmail.com`
+
 ---
 
 ## Contribute
@@ -48,42 +29,26 @@ If you would like to help, please take a look at the list of
 This project is licensed under **General Public License v3.0 license**. See the [LICENSE](LICENSE) file for more info.
 
 ## Copyright
-2017 - 2018 Varun Sridharan, [varunsridharan.in][website]
+2017 - 2020 Varun Sridharan, [varunsridharan.in][website]
 
 If you find it useful, let me know :wink:
 
 You can contact me on [Twitter][twitter] or through my [email][email].
 
 ## Backed By
-| [![DigitalOcean][do-image]][do-ref] | [![JetBrains][jb-image]][jb-ref] |  [![Tidio Chat][tidio-image]][tidio-ref] |
-| --- | --- | --- |
+| [![DigitalOcean][do-image]][do-ref] | [![JetBrains][jb-image]][jb-ref] |  [![Tidio Chat][tidio-image]][tidio-ref] | [![Tidio Chat][tidio-image]][tidio-ref] |
+| --- | --- | --- | --- |
 
 [twitter]: https://twitter.com/varunsridharan2
 [email]: mailto:varunsridharan23@gmail.com
 [website]: https://varunsridharan.in
 [issues]: issues/
-[composer]: http://getcomposer.org/download/
-[downloadzip]:https://github.com/varunsridharan/vsp-framework/archive/master.zip
 
 [do-image]: https://vsp.ams3.cdn.digitaloceanspaces.com/cdn/DO_Logo_Horizontal_Blue-small.png
 [jb-image]: https://vsp.ams3.cdn.digitaloceanspaces.com/cdn/phpstorm-small.png?v3
+[cro-image]: https://vsp.ams3.cdn.digitaloceanspaces.com/cdn/cloudron.png
 [tidio-image]: https://vsp.ams3.cdn.digitaloceanspaces.com/cdn/tidiochat-small.png
 [do-ref]: https://s.svarun.in/Ef
+[cro-ref]: https://cloudron.io/
 [jb-ref]: https://www.jetbrains.com
 [tidio-ref]: https://tidiochat.com
-
-[latest-stable-version-img]: https://poser.pugx.org/varunsridharan/php-autoloader/version
-[latest-Unstable-version-img]: https://poser.pugx.org/varunsridharan/php-autoloader/v/unstable
-[total-downloads-img]: https://poser.pugx.org/varunsridharan/php-autoloader/downloads
-[Latest-Unstable-version-img]: https://poser.pugx.org/varunsridharan/php-autoloader/v/unstable
-[wpcs-img]: https://img.shields.io/badge/WordPress-Standar-1abc9c.svg
-[license-img]: https://poser.pugx.org/varunsridharan/php-autoloader/license
-[composerlock-img]: https://poser.pugx.org/varunsridharan/php-autoloader/composerlock
-
-[latest-stable-version-link]: https://packagist.org/packages/varunsridharan/php-autoloader
-[latest-Unstable-version-link]: https://packagist.org/packages/varunsridharan/php-autoloader
-[total-downloads-link]: https://packagist.org/packages/varunsridharan/php-autoloader
-[Latest-Unstable-Version-link]: https://packagist.org/packages/varunsridharan/php-autoloader
-[wpcs-link]: https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/
-[license-link]: https://packagist.org/packages/varunsridharan/php-autoloader
-[composerlock-link]: https://packagist.org/packages/varunsridharan/php-autoloader
