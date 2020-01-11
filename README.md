@@ -56,7 +56,7 @@ You can contact me on [Twitter][twitter] or through my [email][email].
 
 [do-image]: https://vsp.ams3.cdn.digitaloceanspaces.com/cdn/DO_Logo_Horizontal_Blue-small.png
 [jb-image]: https://vsp.ams3.cdn.digitaloceanspaces.com/cdn/phpstorm-small.png?v3
-[cro-image]: https://vsp.ams3.cdn.digitaloceanspaces.com/cdn/cloudron.png?v3
+[cro-image]: https://vsp.ams3.cdn.digitaloceanspaces.com/cdn/cloudron.png?v4
 [tidio-image]: https://vsp.ams3.cdn.digitaloceanspaces.com/cdn/tidiochat-small.png
 [do-ref]: https://s.svarun.in/Ef
 [cro-ref]: https://cloudron.io/
