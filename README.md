@@ -22,8 +22,17 @@ This is a simple script which requires 2 arguments
 1. Domain Name To Run Android Private DNS Service
 2. Email To Share with letsencrypt to get an SSL For Android Private DNS
 
+### For Pihole 5
 ```
-sudo wget https://raw.githubusercontent.com/varunsridharan/pi-hole-android-private-dns/master/pi-hole-android-private-dns.sh
+sudo wget https://raw.githubusercontent.com/varunsridharan/pi-hole-android-private-dns/main/pi-hole5.sh
+sudo bash pi-hole5.sh {domain_name} {email_for_letsencrypt}
+```
+
+**Example Run** `sudo bash pi-hole5.sh mydns.example.com myemail@gmail.com`
+
+### For Pihole 4 & Below
+```
+sudo wget https://raw.githubusercontent.com/varunsridharan/pi-hole-android-private-dns/main/pi-hole-android-private-dns.sh
 sudo bash pi-hole-android-private-dns.sh {domain_name} {email_for_letsencrypt}
 ```
 
