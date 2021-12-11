@@ -24,7 +24,7 @@ This is a simple script which requires 2 arguments
 
 ### For Pihole 5
 ```
-sudo wget https://raw.githubusercontent.com/GhostlyCrowd/pi-hole-android-private-dns/main/pi-hole-android-private-dns.sh
+sudo wget https://raw.githubusercontent.com/GhostlyCrowd/pi-hole-android-private-dns/main/pi-hole5.sh
 sudo bash pi-hole5.sh {domain_name} {email_for_letsencrypt}
 ```
 
