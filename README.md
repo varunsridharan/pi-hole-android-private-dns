@@ -13,18 +13,18 @@ As a member of the open source community, I would like to give back, and am post
 ## Requirements
 1. Ubuntu / Debain Based (Any Version)
 2. Pi-Hole Installed With Web Server
-3. Allow The Following Ports in TCP (`80,443,853`)
+3. Forward The Following Ports in TCP (`80,443,853`) to your Pihole instance.
 
 ***Note*** I dont use Raspberry Pi to run Pi-Hole so i was not able to test. but the same steps are required for it.
 
 ## Installation
 This is a simple script which requires 2 arguments
-1. Domain Name To Run Android Private DNS Service
+1. Domain Name To Run Android Private DNS Service Example: dns.myhomenetwork.net 
 2. Email To Share with letsencrypt to get an SSL For Android Private DNS
 
 ### For Pihole 5
 ```
-sudo wget https://raw.githubusercontent.com/varunsridharan/pi-hole-android-private-dns/main/pi-hole5.sh
+sudo wget https://raw.githubusercontent.com/GhostlyCrowd/pi-hole-android-private-dns/main/pi-hole5.sh
 sudo bash pi-hole5.sh {domain_name} {email_for_letsencrypt}
 ```
 
@@ -32,11 +32,11 @@ sudo bash pi-hole5.sh {domain_name} {email_for_letsencrypt}
 
 ### For Pihole 4 & Below
 ```
-sudo wget https://raw.githubusercontent.com/varunsridharan/pi-hole-android-private-dns/main/pi-hole-android-private-dns.sh
+sudo wget https://raw.githubusercontent.com/GhostlyCrowd/pi-hole-android-private-dns/main/pi-hole-android-private-dns.sh
 sudo bash pi-hole-android-private-dns.sh {domain_name} {email_for_letsencrypt}
 ```
 
-**Example Run** `sudo bash pi-hole-android-private-dns.sh mydns.example.com myemail@gmail.com`
+**Example Run** `sudo bash pi-hole-android-private-dns.sh dns.myhomenetwork.net myemail@gmail.com`
 
 ---
 
@@ -48,7 +48,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-[Checkout CHANGELOG.md](https://github.com/varunsridharan/pi-hole-android-private-dns/blob/main/CHANGELOG.md)
+[Checkout CHANGELOG.md](https://github.com/GhostlyCrowd/pi-hole-android-private-dns/blob/main/CHANGELOG.md)
 
 
 ## 🤝 Contributing
