@@ -101,8 +101,10 @@ sudo mkdir /etc/nginx/streams/
 sudo touch /etc/nginx/streams/dns-over-tls
 sudo echo "upstream dns-servers {
            server    127.0.0.1:53;
+	   server    [::1]:53;
     }
     server {
+      listen [::1]:853 ssl;
       listen 853 ssl; # managed by Certbot
       ssl_certificate /etc/letsencrypt/live/{dns_domain_name}/fullchain.pem; # managed by Certbot
       ssl_certificate_key /etc/letsencrypt/live/{dns_domain_name}/privkey.pem; # managed by Certbot
